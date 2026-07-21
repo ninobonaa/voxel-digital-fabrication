@@ -359,29 +359,23 @@ function initScrollScrubbedCanvas() {
       drawFrame(currentFrameIndex);
     }
 
-    // Desktop Hero Content & Metrics: 100% visible at scroll 0, fading out when scrolling past 65% into next section
+    // Desktop Hero Content & Metrics: 0% opacity at scroll top (progress 0) -> 100% opacity when piece finishes materialization (progress 1.0)
+    const textOpacityVal = Math.max(0, Math.min(1, progress));
+
     if (heroContent) {
-      let contentOpacity = 1;
-      if (progress > 0.65) {
-        contentOpacity = Math.max(0, 1 - (progress - 0.65) / 0.25);
-      }
-      heroContent.style.opacity = contentOpacity.toFixed(3);
+      heroContent.style.opacity = textOpacityVal.toFixed(3);
     }
 
     if (heroMetrics) {
-      let metricsOpacity = 1;
-      if (progress > 0.65) {
-        metricsOpacity = Math.max(0, 1 - (progress - 0.65) / 0.25);
-      }
-      heroMetrics.style.opacity = metricsOpacity.toFixed(3);
+      heroMetrics.style.opacity = textOpacityVal.toFixed(3);
     }
 
     // Desktop Section Crossfade Zone (#servicos)
     if (servicosSection) {
-      if (progress > 0.65) {
-        const crossfadeProgress = Math.min(1, (progress - 0.65) / 0.25);
+      if (progress > 0.8) {
+        const crossfadeProgress = Math.min(1, (progress - 0.8) / 0.2);
         servicosSection.style.opacity = crossfadeProgress.toFixed(3);
-      } else if (progress <= 0.65 && rect.top <= 0) {
+      } else if (progress <= 0.8 && rect.top <= 0) {
         servicosSection.style.opacity = '0';
       }
     }

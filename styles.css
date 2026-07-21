@@ -380,7 +380,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Hero Container - Absolute viewport-anchored positioning immediately below 80px header */
 .hero-container {
   position: absolute;
-  top: calc(var(--nav-height) + 24px); /* 80px + 24px = 104px from viewport top */
+  top: calc(var(--nav-height) + 88px); /* 80px header + 88px = 168px top offset for balanced upper-middle composition */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
