@@ -377,10 +377,10 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
-/* Hero Container - Absolute viewport-anchored positioning immediately below 80px header */
+/* Hero Container - Absolute viewport-anchored positioning matching reference photo composition */
 .hero-container {
   position: absolute;
-  top: calc(var(--nav-height) + 88px); /* 80px header + 88px = 168px top offset for balanced upper-middle composition */
+  top: calc(var(--nav-height) + 36px); /* 80px + 36px = 116px top offset */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -393,12 +393,11 @@ h1, h2, h3, h4, h5, h6 {
 /* Hero Content */
 .hero-content {
   width: 100%;
-  max-width: 540px;
+  max-width: 560px;
   margin-left: 0;
   margin-right: auto;
   text-align: left;
   opacity: 1;
-  transform: translateY(0);
   will-change: opacity;
   transition: opacity 0.3s ease;
 }
@@ -413,7 +412,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.05em;
   color: var(--text-muted);
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .pulse-dot {
@@ -426,21 +425,21 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 3.8vw, 4.2rem);
+  font-size: clamp(3.2rem, 3.8vw, 4.4rem);
   line-height: 1.02;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   color: #ffffff;
   text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95);
 }
 
 .hero-description {
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   color: var(--text-primary);
   max-width: 440px;
-  line-height: 1.5;
-  margin-bottom: 24px;
+  line-height: 1.55;
+  margin-bottom: 28px;
   font-weight: 300;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
 }
@@ -450,6 +449,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
+  margin-bottom: 44px;
 }
 
 .canvas-loader {
@@ -483,16 +483,10 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(100%); }
 }
 
-/* MINIMALIST KEY METRICS STRIP - Anchored cleanly to bottom of 100vh viewport */
+/* MINIMALIST KEY METRICS STRIP - Integrated into left hero column beneath CTA buttons */
 .hero-metrics-strip {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: var(--container-max);
-  padding: 0 40px;
-  z-index: 2;
+  padding: 0;
+  margin-top: 0;
   opacity: 1;
   will-change: opacity;
   transition: opacity 0.3s ease;
@@ -501,19 +495,20 @@ h1, h2, h3, h4, h5, h6 {
 .metrics-container {
   display: flex;
   justify-content: flex-start;
-  gap: 80px;
-  align-items: center;
+  gap: 60px;
+  align-items: flex-start;
+  padding: 0;
 }
 
 .metric-block {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .metric-number {
   font-family: var(--font-display);
-  font-size: 3.2rem;
+  font-size: 2.4rem;
   font-weight: 700;
   color: var(--text-bright);
   line-height: 1;
@@ -521,7 +516,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .metric-caption {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
 }
 

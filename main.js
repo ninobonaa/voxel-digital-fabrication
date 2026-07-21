@@ -366,10 +366,6 @@ function initScrollScrubbedCanvas() {
       heroContent.style.opacity = textOpacityVal.toFixed(3);
     }
 
-    if (heroMetrics) {
-      heroMetrics.style.opacity = textOpacityVal.toFixed(3);
-    }
-
     // Desktop Section Crossfade Zone (#servicos)
     if (servicosSection) {
       if (progress > 0.8) {
