@@ -425,8 +425,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 3.8vw, 4.4rem);
-  line-height: 1.02;
+  font-size: clamp(3.0rem, 3.6vw, 4.2rem);
+  line-height: 0.95;
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
