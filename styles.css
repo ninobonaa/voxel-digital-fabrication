@@ -1158,7 +1158,7 @@ h1, h2, h3, h4, h5, h6 {
     display: none !important;
   }
 
-  /* 2. Official Metallic V/X Monogram Static Backdrop Image (Prominent Full-Section Backdrop) */
+  /* 2. Official Metallic V/X Monogram Static Backdrop Image (High-Res Portrait Studio Backdrop) */
   .hero-mobile-bg-sculpture {
     display: block !important;
     position: absolute;
@@ -1167,7 +1167,7 @@ h1, h2, h3, h4, h5, h6 {
     transform: translate(-50%, -50%);
     width: 100%;
     max-width: 640px;
-    height: 90%;
+    height: 100%;
     opacity: 0.65;
     pointer-events: none;
     z-index: 0;
