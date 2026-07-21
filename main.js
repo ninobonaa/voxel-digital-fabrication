@@ -214,7 +214,7 @@ function initAppleScrollObserver() {
   });
 }
 
-/* ROBUST DESKTOP CANVAS SCUBBING & CLEAN MOBILE FALLBACK */
+/* ROBUST DESKTOP CANVAS SCRUBBING & CLEAN MOBILE FALLBACK */
 function initScrollScrubbedCanvas() {
   const canvas = document.getElementById('scrollCanvas');
   const canvasLoader = document.getElementById('canvasLoader');

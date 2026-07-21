@@ -381,7 +381,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-/* Hero Content - Desktop Default: Visible (opacity: 1) */
+/* Hero Content - Desktop Default: Fully Visible */
 .hero-content {
   width: 100%;
   max-width: 520px;
@@ -443,9 +443,9 @@ h1, h2, h3, h4, h5, h6 {
   flex-wrap: wrap;
 }
 
-/* Mobile Hero Sculpture Image Container (Hidden on Desktop) */
+/* ABSOLUTE GUARANTEE: Desktop removes mobile sculpture completely from DOM display */
 .hero-mobile-sculpture {
-  display: none;
+  display: none !important;
 }
 
 .canvas-loader {
@@ -479,7 +479,7 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(100%); }
 }
 
-/* MINIMALIST KEY METRICS STRIP - Desktop Default: Visible (opacity: 1) */
+/* MINIMALIST KEY METRICS STRIP - Desktop Default: Fully Visible */
 .hero-metrics-strip {
   padding: 40px 0 60px 0;
   opacity: 1;
@@ -1143,27 +1143,62 @@ h1, h2, h3, h4, h5, h6 {
     display: none !important;
   }
 
-  /* Display clean static 3D sculpture component on mobile */
   .hero-container {
     flex-direction: column;
     align-items: flex-start;
     padding-bottom: 20px;
   }
 
+  /* Integrated Mobile Sculpture Element with Cyan Ambient Radial Glow (/impeccable delight) */
   .hero-mobile-sculpture {
-    display: block;
+    display: block !important;
+    position: relative;
     width: 100%;
-    max-width: 380px;
-    margin: 32px auto;
+    max-width: 360px;
+    margin: 32px auto 36px auto;
     text-align: center;
   }
 
+  .hero-mobile-sculpture.scroll-reveal {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    transition: opacity 0.8s var(--ease-apple), transform 0.8s var(--ease-apple);
+  }
+
+  .hero-mobile-sculpture.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .sculpture-glow-backdrop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(
+      circle at center,
+      rgba(56, 189, 248, 0.18) 0%,
+      rgba(56, 189, 248, 0.04) 50%,
+      transparent 70%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(20px);
+  }
+
   .mobile-sculpture-img {
-    width: 100%;
+    position: relative;
+    z-index: 1;
+    width: 92%;
+    max-width: 320px;
     height: auto;
-    max-height: 280px;
+    margin: 0 auto;
+    display: block;
     object-fit: contain;
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.95));
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.95));
   }
 
   .hero-text-legibility-overlay {

@@ -78,7 +78,7 @@
   </div>
 
   <main>
-    <!-- HERO SECTION WITH FULL-BLEED SCROLL-SCRUBBING BACKGROUND CANVAS -->
+    <!-- HERO SECTION WITH FULL-BLEED SCROLL-SCRUBBING BACKGROUND CANVAS (DESKTOP) -->
     <div class="hero-scroll-pin-track" id="heroScrollTrack">
       <section class="hero-section sticky-hero full-bleed-hero" id="hero">
 
@@ -112,6 +112,12 @@
               Transformamos conceitos em peças físicas com precisão absoluta.
             </p>
 
+            <!-- Integrated Mobile Sculpture Element (Texto -> Imagem com Glow -> Botões -> Stats) -->
+            <div class="hero-mobile-sculpture scroll-reveal" id="mobileSculpture">
+              <div class="sculpture-glow-backdrop"></div>
+              <img src="assets/hero_sculpture_v3.png" alt="VOXEL Monograma 3D" class="mobile-sculpture-img" loading="eager">
+            </div>
+
             <div class="hero-buttons">
               <button class="btn btn-primary" data-modal="quoteModal">
                 SOLICITAR ORÇAMENTO
@@ -120,11 +126,6 @@
                 CONHECER SERVIÇOS
               </a>
             </div>
-          </div>
-
-          <!-- Mobile Hero Sculpture Element (IntersectionObserver animated, touch fallback) -->
-          <div class="hero-mobile-sculpture scroll-reveal">
-            <img src="assets/hero_sculpture_v3.png" alt="VOXEL Monograma 3D" class="mobile-sculpture-img" loading="eager">
           </div>
         </div>
 
