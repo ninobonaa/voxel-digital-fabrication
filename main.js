@@ -222,7 +222,7 @@ function initAppleScrollObserver() {
   });
 }
 
-/* DESKTOP CANVAS SCROLL-SCRUBBING ENGINE (MOBILE RUNTIME: ZERO FRAME DOWNLOADS) */
+/* DESKTOP CANVAS SCROLL-SCRUBBING ENGINE - RESTORED TO INITIAL VERCEL COMMIT (04249fb) */
 function initScrollScrubbedCanvas() {
   const canvas = document.getElementById('scrollCanvas');
   const canvasLoader = document.getElementById('canvasLoader');
@@ -253,12 +253,11 @@ function initScrollScrubbedCanvas() {
     return;
   }
 
-  // DESKTOP ONLY PIPELINE
+  // DESKTOP ONLY PIPELINE (REVERTED TO ORIGINAL 04249fb IMPLEMENTATION)
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ctx = canvas.getContext('2d');
   const FRAME_COUNT = 60;
-  const rawFrames = new Array(FRAME_COUNT);
-  const bitmaps = new Array(FRAME_COUNT);
+  const frames = [];
   let loadedCount = 0;
 
   if (canvasLoader) canvasLoader.classList.add('loading');
@@ -273,45 +272,29 @@ function initScrollScrubbedCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  // Load high-res desktop frames
+  // Preload high-res desktop frames
   for (let i = 1; i <= FRAME_COUNT; i++) {
     const img = new Image();
-    const index = i - 1;
     const frameNum = String(i).padStart(3, '0');
     img.src = `assets/frames/frame_${frameNum}.jpg`;
 
     img.onload = () => {
-      rawFrames[index] = img;
-      if (window.createImageBitmap) {
-        createImageBitmap(img).then(bmp => {
-          bitmaps[index] = bmp;
-          onFrameReady();
-        }).catch(() => {
-          bitmaps[index] = img;
-          onFrameReady();
-        });
-      } else {
-        bitmaps[index] = img;
-        onFrameReady();
+      loadedCount++;
+      if (loadedCount === 1) {
+        drawFrame(0);
+      }
+      if (loadedCount >= 8 && canvasLoader) {
+        canvasLoader.classList.remove('loading');
       }
     };
-  }
 
-  function onFrameReady() {
-    loadedCount++;
-    if (loadedCount === 1) {
-      drawFrame(0);
-      updateScrollFrame();
-    }
-    if (loadedCount >= 8 && canvasLoader) {
-      canvasLoader.classList.remove('loading');
-    }
+    frames.push(img);
   }
 
   function drawFrame(index) {
-    const source = bitmaps[index] || rawFrames[index];
-    if (source) {
-      const imgRatio = source.width / source.height;
+    const img = frames[index];
+    if (img && img.complete) {
+      const imgRatio = img.width / img.height;
       const canvasRatio = canvas.width / canvas.height;
 
       let renderWidth, renderHeight, offsetX, offsetY;
@@ -329,18 +312,11 @@ function initScrollScrubbedCanvas() {
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(source, offsetX, offsetY, renderWidth, renderHeight);
+      ctx.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
     }
   }
 
   let currentFrameIndex = 0;
-
-  if (isReducedMotion) {
-    drawFrame(59);
-    if (heroContent) { heroContent.style.opacity = '1'; heroContent.style.transform = 'none'; }
-    if (heroMetrics) { heroMetrics.style.opacity = '1'; heroMetrics.style.transform = 'none'; }
-    return;
-  }
 
   function updateScrollFrame() {
     const rect = track.getBoundingClientRect();
@@ -351,44 +327,43 @@ function initScrollScrubbedCanvas() {
     let progress = -rect.top / maxScroll;
     progress = Math.max(0, Math.min(1, progress));
 
-    // Desktop Canvas Frame Scrubbing (0 to 59)
+    // A. Canvas Frame Scrubbing (0 to 59)
     const targetIndex = Math.min(FRAME_COUNT - 1, Math.floor(progress * FRAME_COUNT));
 
     if (targetIndex !== currentFrameIndex) {
       currentFrameIndex = targetIndex;
-      drawFrame(currentFrameIndex);
+      requestAnimationFrame(() => drawFrame(currentFrameIndex));
     }
 
-    // Desktop Hero Content & Metrics: 0% opacity at scroll top (progress 0) -> 100% opacity when piece finishes materialization (progress 1.0)
-    const textOpacityVal = Math.max(0, Math.min(1, progress));
+    // B. Synchronized Text & Metrics Materialization (Strict 0% to 100% Opacity + TranslateY)
+    if (heroContent && !isMobile && !isReducedMotion) {
+      const opacityVal = Math.max(0, Math.min(1, progress));
+      const translateYVal = (1 - opacityVal) * 24;
 
-    if (heroContent) {
-      heroContent.style.opacity = textOpacityVal.toFixed(3);
+      heroContent.style.opacity = opacityVal.toFixed(3);
+      heroContent.style.transform = `translateY(${translateYVal.toFixed(1)}px)`;
     }
 
-    // Desktop Section Crossfade Zone (#servicos)
-    if (servicosSection) {
-      if (progress > 0.8) {
-        const crossfadeProgress = Math.min(1, (progress - 0.8) / 0.2);
+    if (heroMetrics && !isMobile && !isReducedMotion) {
+      const opacityVal = Math.max(0, Math.min(1, progress));
+      const translateYVal = (1 - opacityVal) * 16;
+
+      heroMetrics.style.opacity = opacityVal.toFixed(3);
+      heroMetrics.style.transform = `translateY(${translateYVal.toFixed(1)}px)`;
+    }
+
+    // C. Section Crossfade Zone (#servicos)
+    if (servicosSection && !isMobile && !isReducedMotion) {
+      if (progress > 0.7) {
+        const crossfadeProgress = Math.min(1, (progress - 0.7) / 0.3);
         servicosSection.style.opacity = crossfadeProgress.toFixed(3);
-      } else if (progress <= 0.8 && rect.top <= 0) {
+      } else if (progress <= 0.7 && rect.top <= 0) {
         servicosSection.style.opacity = '0';
       }
     }
   }
 
-  let ticking = false;
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        updateScrollFrame();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('scroll', updateScrollFrame, { passive: true });
   updateScrollFrame();
 }
 

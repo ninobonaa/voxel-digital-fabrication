@@ -301,7 +301,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   HERO SECTION - DESKTOP SCROLL-SCRUBBING & MOBILE STATIC HERO
+   HERO SECTION - RESTORED TO INITIAL VERCEL COMMIT (04249fb) FOR DESKTOP
    ========================================================================== */
 .hero-scroll-pin-track {
   position: relative;
@@ -312,7 +312,10 @@ h1, h2, h3, h4, h5, h6 {
   position: sticky;
   top: 0;
   height: 100vh;
-  width: 100%;
+  padding-top: calc(var(--nav-height) + 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   overflow: hidden;
   background-color: #050505;
 }
@@ -377,29 +380,26 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
-/* Hero Container - Absolute viewport-anchored positioning matching reference photo composition */
+/* Hero Container strictly left-aligned */
 .hero-container {
-  position: absolute;
-  top: calc(var(--nav-height) + 36px); /* 80px + 36px = 116px top offset */
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  padding-bottom: 40px;
   width: 100%;
-  max-width: var(--container-max);
-  padding: 0 40px;
-  z-index: 2;
-  pointer-events: auto;
 }
 
-/* Hero Content */
+/* Hero Content - Initial State: Opacity 0 (Completely Invisible at frame 0) */
 .hero-content {
   width: 100%;
-  max-width: 560px;
+  max-width: 520px;
   margin-left: 0;
   margin-right: auto;
   text-align: left;
-  opacity: 1;
-  will-change: opacity;
-  transition: opacity 0.3s ease;
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: opacity, transform;
 }
 
 .status-live-badge {
@@ -412,7 +412,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.05em;
   color: var(--text-muted);
   text-transform: uppercase;
-  margin-bottom: 16px;
+  margin-bottom: 28px;
 }
 
 .pulse-dot {
@@ -425,21 +425,21 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(3.0rem, 3.6vw, 4.2rem);
+  font-size: 5.2rem;
   line-height: 0.95;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
   color: #ffffff;
   text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95);
 }
 
 .hero-description {
-  font-size: 1.08rem;
+  font-size: 1.15rem;
   color: var(--text-primary);
-  max-width: 440px;
-  line-height: 1.55;
-  margin-bottom: 28px;
+  max-width: 460px;
+  line-height: 1.6;
+  margin-bottom: 44px;
   font-weight: 300;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
 }
@@ -449,7 +449,6 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
-  margin-bottom: 44px;
 }
 
 .canvas-loader {
@@ -483,32 +482,33 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(100%); }
 }
 
-/* MINIMALIST KEY METRICS STRIP - Integrated into left hero column beneath CTA buttons */
+/* MINIMALIST KEY METRICS STRIP (Original Desktop Placement) */
 .hero-metrics-strip {
-  padding: 0;
-  margin-top: 0;
-  opacity: 1;
-  will-change: opacity;
-  transition: opacity 0.3s ease;
+  padding: 40px 0 60px 0;
+  opacity: 0;
+  transform: translateY(16px);
+  will-change: opacity, transform;
 }
 
 .metrics-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 40px;
   display: flex;
   justify-content: flex-start;
-  gap: 60px;
-  align-items: flex-start;
-  padding: 0;
+  gap: 80px;
+  align-items: center;
 }
 
 .metric-block {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .metric-number {
   font-family: var(--font-display);
-  font-size: 2.4rem;
+  font-size: 3.2rem;
   font-weight: 700;
   color: var(--text-bright);
   line-height: 1;
@@ -516,7 +516,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .metric-caption {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
 }
 
@@ -1124,7 +1124,7 @@ h1, h2, h3, h4, h5, h6 {
    EXCLUSIVE MOBILE STRATEGY OVERRIDES (@media max-width: 900px, hover: none)
    ========================================================================== */
 @media (max-width: 1200px) {
-  .hero-title { font-size: 3.6rem; }
+  .hero-title { font-size: 4rem; }
   .service-showcase-block, .showcase-reverse { grid-template-columns: 1fr; gap: 40px; }
   .showcase-reverse .showcase-media { grid-column: 1; }
   .showcase-reverse .showcase-body { grid-column: 1; grid-row: auto; }
