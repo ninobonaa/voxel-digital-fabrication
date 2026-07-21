@@ -352,7 +352,7 @@ function initScrollScrubbedCanvas() {
     let progress = -rect.top / maxScroll;
     progress = Math.max(0, Math.min(1, progress));
 
-    // Desktop Canvas Frame Scrubbing
+    // Desktop Canvas Frame Scrubbing (0 to 59)
     const targetIndex = Math.min(FRAME_COUNT - 1, Math.floor(progress * FRAME_COUNT));
 
     if (targetIndex !== currentFrameIndex) {
@@ -360,29 +360,26 @@ function initScrollScrubbedCanvas() {
       drawFrame(currentFrameIndex);
     }
 
-    // Desktop Hero Content & Metrics (100% visible at scroll 0, fading out when transitioning to next section)
+    // Desktop Hero Content & Metrics: 0% opacity at scroll top -> 100% opacity when piece is fully formed
+    const textOpacityVal = Math.max(0, Math.min(1, progress));
+    const translateYVal = (1 - textOpacityVal) * 24;
+
     if (heroContent) {
-      let contentOpacity = 1;
-      if (progress > 0.6) {
-        contentOpacity = Math.max(0, 1 - (progress - 0.6) / 0.3);
-      }
-      heroContent.style.opacity = contentOpacity.toFixed(3);
+      heroContent.style.opacity = textOpacityVal.toFixed(3);
+      heroContent.style.transform = `translateY(${translateYVal.toFixed(1)}px)`;
     }
 
     if (heroMetrics) {
-      let metricsOpacity = 1;
-      if (progress > 0.6) {
-        metricsOpacity = Math.max(0, 1 - (progress - 0.6) / 0.3);
-      }
-      heroMetrics.style.opacity = metricsOpacity.toFixed(3);
+      heroMetrics.style.opacity = textOpacityVal.toFixed(3);
+      heroMetrics.style.transform = `translateY(${(translateYVal * 0.67).toFixed(1)}px)`;
     }
 
     // Desktop Section Crossfade Zone (#servicos)
     if (servicosSection) {
-      if (progress > 0.6) {
-        const crossfadeProgress = Math.min(1, (progress - 0.6) / 0.3);
+      if (progress > 0.75) {
+        const crossfadeProgress = Math.min(1, (progress - 0.75) / 0.25);
         servicosSection.style.opacity = crossfadeProgress.toFixed(3);
-      } else if (progress <= 0.6 && rect.top <= 0) {
+      } else if (progress <= 0.75 && rect.top <= 0) {
         servicosSection.style.opacity = '0';
       }
     }
