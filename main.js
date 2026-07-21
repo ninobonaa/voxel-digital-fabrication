@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VOXEL DIGITAL FABRICATION - ROBUST MOBILE & DESKTOP INTERACTIVITY ENGINE
+   VOXEL DIGITAL FABRICATION - UNIFIED SCROLL-SCRUBBING ENGINE (DESKTOP & MOBILE)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -191,12 +191,12 @@ function initProjectCarousel() {
   }
 }
 
-/* APPLE-STYLE SCROLL REVEAL OBSERVER */
+/* APPLE-STYLE SCROLL REVEAL OBSERVER WITH STAGGER TRANSITIONS (/impeccable animate) */
 function initAppleScrollObserver() {
   const elements = document.querySelectorAll('.scroll-reveal');
 
   const observerOptions = {
-    threshold: 0.12,
+    threshold: 0.1,
     rootMargin: '0px 0px -40px 0px'
   };
 
@@ -214,7 +214,7 @@ function initAppleScrollObserver() {
   });
 }
 
-/* ROBUST DESKTOP CANVAS SCRUBBING & CLEAN MOBILE FALLBACK */
+/* UNIFIED CANVAS SCROLL-SCRUBBING ENGINE FOR DESKTOP & MOBILE */
 function initScrollScrubbedCanvas() {
   const canvas = document.getElementById('scrollCanvas');
   const canvasLoader = document.getElementById('canvasLoader');
@@ -226,28 +226,8 @@ function initScrollScrubbedCanvas() {
 
   if (!canvas || !track) return;
 
-  // Robust Mobile & Touch Device Detection
-  const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-  const isSmallScreen = window.innerWidth <= 900;
-  const isMobile = isTouchDevice || isSmallScreen;
+  const isMobile = window.innerWidth <= 900;
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Clean Mobile / Touch Fallback: Disable Canvas & Pinning completely
-  if (isMobile || isReducedMotion) {
-    if (wrapper) wrapper.style.display = 'none';
-    if (heroContent) {
-      heroContent.style.opacity = '1';
-      heroContent.style.transform = 'none';
-    }
-    if (heroMetrics) {
-      heroMetrics.style.opacity = '1';
-      heroMetrics.style.transform = 'none';
-    }
-    if (servicosSection) {
-      servicosSection.style.opacity = '1';
-    }
-    return;
-  }
 
   const ctx = canvas.getContext('2d');
   const FRAME_COUNT = 60;
@@ -266,18 +246,20 @@ function initScrollScrubbedCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  // Preload frames asynchronously for Desktop
+  // Use optimized lightweight mobile frames on mobile devices (~4.8KB per frame)
+  const frameFolderPath = isMobile ? 'assets/frames_mobile' : 'assets/frames';
+
   for (let i = 1; i <= FRAME_COUNT; i++) {
     const img = new Image();
     const frameNum = String(i).padStart(3, '0');
-    img.src = `assets/frames/frame_${frameNum}.jpg`;
+    img.src = `${frameFolderPath}/frame_${frameNum}.jpg`;
 
     img.onload = () => {
       loadedCount++;
       if (loadedCount === 1) {
         drawFrame(0);
       }
-      if (loadedCount >= 10 && canvasLoader) {
+      if (loadedCount >= 8 && canvasLoader) {
         canvasLoader.classList.remove('loading');
       }
     };
@@ -293,16 +275,25 @@ function initScrollScrubbedCanvas() {
 
       let renderWidth, renderHeight, offsetX, offsetY;
 
-      if (canvasRatio > imgRatio) {
-        renderWidth = canvas.width;
-        renderHeight = canvas.width / imgRatio;
-        offsetX = canvas.width * 0.18;
+      if (isMobile) {
+        // Mobile Layout: Center-Right Sculpture Rendering
+        renderHeight = canvas.height * 0.65;
+        renderWidth = renderHeight * imgRatio;
+        offsetX = (canvas.width - renderWidth) * 0.75;
         offsetY = (canvas.height - renderHeight) / 2;
       } else {
-        renderWidth = canvas.height * imgRatio;
-        renderHeight = canvas.height;
-        offsetX = (canvas.width - renderWidth) * 0.95;
-        offsetY = 0;
+        // Desktop Layout: Right-Aligned Sculpture Rendering
+        if (canvasRatio > imgRatio) {
+          renderWidth = canvas.width;
+          renderHeight = canvas.width / imgRatio;
+          offsetX = canvas.width * 0.18;
+          offsetY = (canvas.height - renderHeight) / 2;
+        } else {
+          renderWidth = canvas.height * imgRatio;
+          renderHeight = canvas.height;
+          offsetX = (canvas.width - renderWidth) * 0.95;
+          offsetY = 0;
+        }
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -311,6 +302,12 @@ function initScrollScrubbedCanvas() {
   }
 
   let currentFrameIndex = 0;
+
+  if (isReducedMotion) {
+    // Accessible fallback: static frame 60
+    drawFrame(59);
+    return;
+  }
 
   function updateScrollFrame() {
     const rect = track.getBoundingClientRect();
@@ -321,7 +318,7 @@ function initScrollScrubbedCanvas() {
     let progress = -rect.top / maxScroll;
     progress = Math.max(0, Math.min(1, progress));
 
-    // A. Canvas Frame Scrubbing
+    // A. Canvas Frame Scrubbing (Desktop & Mobile)
     const targetIndex = Math.min(FRAME_COUNT - 1, Math.floor(progress * FRAME_COUNT));
 
     if (targetIndex !== currentFrameIndex) {
@@ -329,7 +326,7 @@ function initScrollScrubbedCanvas() {
       requestAnimationFrame(() => drawFrame(currentFrameIndex));
     }
 
-    // B. Desktop Text & Metrics (100% visible at scroll 0, fading out when transitioning to next section)
+    // B. Hero Text & Metrics (100% visible at scroll 0, fading out when transitioning to next section)
     if (heroContent) {
       let contentOpacity = 1;
       if (progress > 0.6) {

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VOXEL DIGITAL FABRICATION - MINIMALIST DESIGN SYSTEM & RESPONSIVE ENGINE
+   VOXEL DIGITAL FABRICATION - UNIFIED DESKTOP & MOBILE SCROLL ENGINE
    ========================================================================== */
 
 :root {
@@ -301,11 +301,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   HERO SECTION - DESKTOP CANVAS & MOBILE FALLBACK
+   HERO SECTION - UNIFIED SCROLL-SCRUBBING CANVAS (DESKTOP & MOBILE)
    ========================================================================== */
 .hero-scroll-pin-track {
   position: relative;
-  height: 250vh; /* Dedicated scroll pinning distance for desktop */
+  height: 250vh; /* Dedicated scroll pinning distance */
 }
 
 .hero-section.sticky-hero {
@@ -320,7 +320,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #050505;
 }
 
-/* Full-Bleed Canvas Wrapper with Bottom Mask Fade (Desktop) */
+/* Single Unified Canvas Wrapper */
 .hero-fullbleed-canvas-wrapper {
   position: absolute;
   top: 0;
@@ -381,7 +381,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-/* Hero Content - Desktop Default: Fully Visible */
+/* Hero Content - Default: Fully Visible */
 .hero-content {
   width: 100%;
   max-width: 520px;
@@ -443,11 +443,6 @@ h1, h2, h3, h4, h5, h6 {
   flex-wrap: wrap;
 }
 
-/* ABSOLUTE GUARANTEE: Desktop removes mobile sculpture completely from DOM display */
-.hero-mobile-sculpture {
-  display: none !important;
-}
-
 .canvas-loader {
   position: absolute;
   bottom: 20px;
@@ -479,7 +474,7 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(100%); }
 }
 
-/* MINIMALIST KEY METRICS STRIP - Desktop Default: Fully Visible */
+/* MINIMALIST KEY METRICS STRIP */
 .hero-metrics-strip {
   padding: 40px 0 60px 0;
   opacity: 1;
@@ -519,7 +514,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   SECTIONS COMMON & SCROLLYTELLING ANIMATION
+   SECTIONS COMMON & SCROLL REVEAL TRANSITIONS (/impeccable animate)
    ========================================================================== */
 .section {
   padding: 140px 0;
@@ -529,8 +524,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.8s var(--ease-apple), transform 0.8s var(--ease-apple);
+  transform: translateY(24px);
+  transition: opacity 0.55s var(--ease-apple), transform 0.55s var(--ease-apple);
   will-change: opacity, transform;
 }
 
@@ -538,6 +533,12 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Stagger Delays for Smooth Section Entrance */
+.stagger-1 { transition-delay: 0.08s; }
+.stagger-2 { transition-delay: 0.16s; }
+.stagger-3 { transition-delay: 0.24s; }
+.stagger-4 { transition-delay: 0.32s; }
 
 .minimal-section-title {
   font-family: var(--font-display);
@@ -1113,7 +1114,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   ROBUST RESPONSIVE DESIGN & MOBILE OPTIMIZATIONS
+   RESPONSIVE DESIGN & MOBILE OPTIMIZATIONS
    ========================================================================== */
 @media (max-width: 1200px) {
   .hero-title { font-size: 4rem; }
@@ -1122,105 +1123,29 @@ h1, h2, h3, h4, h5, h6 {
   .showcase-reverse .showcase-body { grid-column: 1; grid-row: auto; }
 }
 
-@media (max-width: 900px), (hover: none) and (pointer: coarse) {
-  /* Remove section pinning height on mobile completely */
+@media (max-width: 900px) {
+  /* Mobile Hero Pin Track Distance (Otimizado para scroll suave) */
   .hero-scroll-pin-track {
-    height: auto !important;
-    position: relative !important;
-  }
-
-  .hero-section.sticky-hero {
-    position: relative !important;
-    top: 0 !important;
-    height: auto !important;
-    min-height: auto !important;
-    padding-top: calc(var(--nav-height) + 20px) !important;
-    padding-bottom: 40px !important;
-  }
-
-  /* Completely disable desktop canvas on mobile */
-  .hero-fullbleed-canvas-wrapper {
-    display: none !important;
-  }
-
-  .hero-container {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-bottom: 20px;
-  }
-
-  /* Integrated Mobile Sculpture Element with Cyan Ambient Radial Glow (/impeccable delight) */
-  .hero-mobile-sculpture {
-    display: block !important;
-    position: relative;
-    width: 100%;
-    max-width: 360px;
-    margin: 32px auto 36px auto;
-    text-align: center;
-  }
-
-  .hero-mobile-sculpture.scroll-reveal {
-    opacity: 0;
-    transform: translateY(24px) scale(0.96);
-    transition: opacity 0.8s var(--ease-apple), transform 0.8s var(--ease-apple);
-  }
-
-  .hero-mobile-sculpture.scroll-reveal.revealed {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  .sculpture-glow-backdrop {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 280px;
-    height: 280px;
-    background: radial-gradient(
-      circle at center,
-      rgba(56, 189, 248, 0.18) 0%,
-      rgba(56, 189, 248, 0.04) 50%,
-      transparent 70%
-    );
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(20px);
-  }
-
-  .mobile-sculpture-img {
-    position: relative;
-    z-index: 1;
-    width: 92%;
-    max-width: 320px;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-    object-fit: contain;
-    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.95));
+    height: 180vh;
   }
 
   .hero-text-legibility-overlay {
-    display: none !important;
+    width: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(5, 5, 5, 0.92) 0%,
+      rgba(5, 5, 5, 0.75) 50%,
+      rgba(5, 5, 5, 0.95) 100%
+    );
   }
 
-  /* Fix section margins & clean padding for mobile */
   .section {
-    padding: 60px 0 !important;
+    padding: 70px 0 !important;
   }
 
   .services-minimal-section {
-    padding-top: 60px !important;
-    margin-top: 0 !important; /* Zero negative margins on mobile */
-    opacity: 1 !important;
-    z-index: 2;
-  }
-
-  .hero-content, .hero-metrics-strip {
-    opacity: 1 !important;
-    transform: none !important;
-    max-width: 100%;
+    padding-top: 70px !important;
+    margin-top: -40px !important;
   }
 
   .nav-links, .nav-btn { display: none; }
@@ -1234,7 +1159,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .metric-number {
-    font-size: 2.2rem;
+    font-size: 2.4rem;
   }
 
   .metric-caption {
@@ -1242,7 +1167,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .services-intro {
-    margin-bottom: 40px;
+    margin-bottom: 48px;
   }
 
   .service-showcase-block {
@@ -1255,13 +1180,13 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .showcase-title {
-    font-size: 1.8rem;
-    margin-bottom: 12px;
+    font-size: 2rem;
+    margin-bottom: 14px;
   }
 
   .showcase-desc {
-    font-size: 0.98rem;
-    margin-bottom: 20px;
+    font-size: 1rem;
+    margin-bottom: 24px;
   }
 
   .timeline-grid-clean {
