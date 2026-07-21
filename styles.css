@@ -1158,16 +1158,16 @@ h1, h2, h3, h4, h5, h6 {
     display: none !important;
   }
 
-  /* 2. Official Metallic V/X Monogram Static Backdrop Image (Grand Centered Mobile Backdrop) */
+  /* 2. Official Metallic V/X Monogram Static Backdrop Image (Prominent Full-Section Backdrop) */
   .hero-mobile-bg-sculpture {
     display: block !important;
     position: absolute;
-    top: 44%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 96%;
-    max-width: 540px;
-    height: auto;
+    width: 100%;
+    max-width: 640px;
+    height: 90%;
     opacity: 0.65;
     pointer-events: none;
     z-index: 0;
@@ -1176,10 +1176,11 @@ h1, h2, h3, h4, h5, h6 {
 
   .mobile-bg-img {
     width: 100%;
-    height: auto;
-    max-height: 520px;
+    height: 100%;
+    max-height: none;
     display: block;
     object-fit: contain;
+    object-position: center center;
     margin: 0 auto;
   }
 
