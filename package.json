@@ -1,0 +1,20 @@
+{
+  "name": "voxel-digital-fabrication",
+  "version": "1.0.0",
+  "description": "VOXEL Digital Fabrication & 3D Printing Landing Page with Apple-Style Scroll Scrubbing Canvas",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'Static build ready'"
+  },
+  "keywords": [
+    "voxel",
+    "3d-printing",
+    "digital-fabrication",
+    "landing-page",
+    "scroll-scrubbing",
+    "canvas"
+  ],
+  "author": "VOXEL 3D",
+  "license": "MIT"
+}

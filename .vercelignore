@@ -1,0 +1,6 @@
+.gemini
+.git
+*.ps1
+*.py
+assets/videos
+DESIGN.md

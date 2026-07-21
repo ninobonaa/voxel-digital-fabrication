@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOXEL | Fabricação Digital & Impressão 3D de Alta Precisão</title>
+  <meta name="description" content="Manufatura aditiva de alta precisão. Transformamos conceitos em peças físicas com precisão, tecnologia e acabamento superior.">
+  <meta name="keywords" content="Impressão 3D, Fabricação Digital, Prototipagem, Peças Técnicas, SLA, FDM, SLS, VOXEL 3D">
+  
+  <!-- Google Fonts: Chakra Petch & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Continuous 60fps GPU Ambient Light Nebula Background (Delight) -->
+  <div class="global-ambient-bg"></div>
+
+  <!-- Background SVG Noise -->
+  <svg class="noise-overlay" aria-hidden="true">
+    <filter id="noiseFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+  </svg>
+
+  <!-- Top Navigation Header (Clean Minimal Navbar) -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <div class="logo-text">
+          <span class="logo-main">VOXEL</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#servicos" class="nav-link">SERVIÇOS</a>
+        <a href="#materiais" class="nav-link">MATERIAIS</a>
+        <a href="#projetos" class="nav-link">PROJETOS</a>
+        <a href="#sobre" class="nav-link">SOBRE</a>
+        <a href="#contato" class="nav-link">CONTATO</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-outline nav-btn" data-modal="quoteModal">
+          ORÇAMENTO
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-header">
+      <div class="logo-text">
+        <span class="logo-main">VOXEL</span>
+      </div>
+      <button class="close-drawer" id="closeDrawer">&times;</button>
+    </div>
+    <nav class="drawer-links">
+      <a href="#servicos" class="drawer-link">SERVIÇOS</a>
+      <a href="#materiais" class="drawer-link">MATERIAIS</a>
+      <a href="#projetos" class="drawer-link">PROJETOS</a>
+      <a href="#sobre" class="drawer-link">SOBRE</a>
+      <a href="#contato" class="drawer-link">CONTATO</a>
+    </nav>
+    <div class="drawer-cta">
+      <button class="btn btn-primary" data-modal="quoteModal" style="width: 100%;">
+        SOLICITAR ORÇAMENTO
+      </button>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO SECTION WITH FULL-BLEED SCROLL-SCRUBBING BACKGROUND CANVAS -->
+    <div class="hero-scroll-pin-track" id="heroScrollTrack">
+      <section class="hero-section sticky-hero full-bleed-hero" id="hero">
+
+        <!-- Full-Bleed Scroll Scrubbing Canvas Background with Bottom Mask -->
+        <div class="hero-fullbleed-canvas-wrapper" id="canvasWrapper">
+          <canvas id="scrollCanvas" class="scroll-canvas-fullbleed"></canvas>
+          <div class="canvas-loader" id="canvasLoader">
+            <div class="loader-bar"></div>
+          </div>
+        </div>
+
+        <!-- Legibility Text Gradient Overlay (Left Side Contrast Protection) -->
+        <div class="hero-text-legibility-overlay"></div>
+
+        <!-- Smooth Bottom Pedestal Transition Vignette -->
+        <div class="hero-bottom-vignette"></div>
+
+        <div class="hero-container z-relative">
+          <div class="hero-content" id="heroContent">
+            <div class="status-live-badge">
+              <span class="pulse-dot"></span>
+              <span>MANUFATURA ADITIVA DE ALTA PRECISÃO</span>
+            </div>
+            
+            <h1 class="hero-title">
+              IDEIAS DIGITAIS.<br>
+              OBJETOS REAIS.
+            </h1>
+
+            <p class="hero-description">
+              Transformamos conceitos em peças físicas com precisão absoluta.
+            </p>
+
+            <div class="hero-buttons">
+              <button class="btn btn-primary" data-modal="quoteModal">
+                SOLICITAR ORÇAMENTO
+              </button>
+              <a href="#servicos" class="btn btn-secondary">
+                CONHECER SERVIÇOS
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- MINIMALIST KEY METRICS STRIP -->
+        <div class="hero-metrics-strip z-relative" id="heroMetrics">
+          <div class="metrics-container">
+            <div class="metric-block">
+              <div class="metric-number" id="countPecas">+12.000</div>
+              <div class="metric-caption">Peças Entregues com Sucesso</div>
+            </div>
+            
+            <div class="metric-block">
+              <div class="metric-number" id="countPrecisao">±0.05mm</div>
+              <div class="metric-caption">Tolerância de Precisão Técnica</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SERVICES SECTION: SEQUENTIAL FULL-WIDTH APPLE-STYLE SHOWCASES WITH CROSSFADE Z-INDEX -->
+    <section class="section services-minimal-section" id="servicos">
+      <div class="section-container">
+        
+        <div class="services-intro">
+          <h2 class="minimal-section-title">SERVIÇOS DE MANUFATURA</h2>
+          <p class="minimal-section-sub">Tecnologia avançada a serviço da inovação física.</p>
+        </div>
+
+        <!-- Sequential Service Block 1: Impressão 3D -->
+        <div class="service-showcase-block scroll-reveal">
+          <div class="showcase-media">
+            <img src="assets/service_3d_printer.jpg" alt="Impressão 3D Industrial" class="showcase-img">
+          </div>
+          <div class="showcase-body">
+            <span class="showcase-num">01</span>
+            <h3 class="showcase-title">IMPRESSÃO 3D</h3>
+            <p class="showcase-desc">Produção aditiva em FDM, SLA e SLS com alta precisão dimensional para peças finais e protótipos.</p>
+            <div class="showcase-highlight-metric">
+              <span class="highlight-val">0,05mm</span>
+              <span class="highlight-lbl">Resolução por camada</span>
+            </div>
+            <button class="btn btn-outline" data-modal="quoteModal">SOLICITAR ORÇAMENTO</button>
+          </div>
+        </div>
+
+        <!-- Sequential Service Block 2: Prototipagem -->
+        <div class="service-showcase-block showcase-reverse scroll-reveal">
+          <div class="showcase-media">
+            <img src="assets/service_prototyping.jpg" alt="Prototipagem Rápida" class="showcase-img">
+          </div>
+          <div class="showcase-body">
+            <span class="showcase-num">02</span>
+            <h3 class="showcase-title">PROTOTIPAGEM RÁPIDA</h3>
+            <p class="showcase-desc">Valide sua ideia antes da produção final em grande escala.</p>
+            <div class="showcase-highlight-metric">
+              <span class="highlight-val">24h a 48h</span>
+              <span class="highlight-lbl">Prazo de entrega médio</span>
+            </div>
+            <button class="btn btn-outline" data-modal="quoteModal">SOLICITAR ORÇAMENTO</button>
+          </div>
+        </div>
+
+        <!-- Sequential Service Block 3: Peças Técnicas -->
+        <div class="service-showcase-block scroll-reveal">
+          <div class="showcase-media">
+            <img src="assets/service_technical_parts.jpg" alt="Peças Técnicas" class="showcase-img">
+          </div>
+          <div class="showcase-body">
+            <span class="showcase-num">03</span>
+            <h3 class="showcase-title">PEÇAS TÉCNICAS</h3>
+            <p class="showcase-desc">Engrenagens, buchas e invólucros técnicos fabricados em materiais de alta performance mecânica.</p>
+            <div class="showcase-highlight-metric">
+              <span class="highlight-val">PA12 & PETG</span>
+              <span class="highlight-lbl">Polímeros de alta resistência</span>
+            </div>
+            <button class="btn btn-outline" data-modal="quoteModal">SOLICITAR ORÇAMENTO</button>
+          </div>
+        </div>
+
+        <!-- Sequential Service Block 4: Projetos Especiais -->
+        <div class="service-showcase-block showcase-reverse scroll-reveal">
+          <div class="showcase-media">
+            <img src="assets/service_special_projects.jpg" alt="Projetos Especiais" class="showcase-img">
+          </div>
+          <div class="showcase-body">
+            <span class="showcase-num">04</span>
+            <h3 class="showcase-title">PROJETOS ESPECIAIS</h3>
+            <p class="showcase-desc">Desenvolvimento sob medida com suporte completo de engenharia CAD e lote customizado.</p>
+            <div class="showcase-highlight-metric">
+              <span class="highlight-val">Sob Medida</span>
+              <span class="highlight-lbl">Engenharia CAD inclusa</span>
+            </div>
+            <button class="btn btn-outline" data-modal="quoteModal">SOLICITAR ORÇAMENTO</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PROCESS SECTION: CONNECTED PROGRESS TRACK LINE -->
+    <section class="section process-minimal-section" id="sobre">
+      <div class="section-container">
+        <div class="services-intro">
+          <h2 class="minimal-section-title">METODOLOGIA</h2>
+          <p class="minimal-section-sub">Do modelo 3D digital à peça física na sua mão.</p>
+        </div>
+
+        <div class="process-timeline-clean" id="processTimeline">
+          <!-- Continuous Fillable Progress Bar Track Line -->
+          <div class="timeline-track-bar">
+            <div class="timeline-progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="timeline-grid-clean">
+            <div class="process-step-clean scroll-reveal" data-step="1">
+              <div class="step-node-dot"></div>
+              <span class="step-num-clean">01</span>
+              <h3 class="step-title-clean">Envio</h3>
+              <p class="step-desc-clean">Envie seu arquivo 3D em STL, OBJ ou STEP.</p>
+            </div>
+
+            <div class="process-step-clean scroll-reveal" data-step="2">
+              <div class="step-node-dot"></div>
+              <span class="step-num-clean">02</span>
+              <h3 class="step-title-clean">Análise</h3>
+              <p class="step-desc-clean">Avaliamos viabilidade técnica e material ideal.</p>
+            </div>
+
+            <div class="process-step-clean scroll-reveal" data-step="3">
+              <div class="step-node-dot"></div>
+              <span class="step-num-clean">03</span>
+              <h3 class="step-title-clean">Produção</h3>
+              <p class="step-desc-clean">Fabricação aditiva com controle de qualidade.</p>
+            </div>
+
+            <div class="process-step-clean scroll-reveal" data-step="4">
+              <div class="step-node-dot"></div>
+              <span class="step-num-clean">04</span>
+              <h3 class="step-title-clean">Entrega</h3>
+              <p class="step-desc-clean">Envio rápido e seguro para todo o país.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION: UNCLUTTERED PRODUCT HERO SHOWCASE -->
+    <section class="section projects-minimal-section" id="projetos">
+      <div class="section-container">
+        <div class="projects-header-minimal">
+          <div>
+            <h2 class="minimal-section-title">PORTFÓLIO</h2>
+            <p class="minimal-section-sub">Exemplos reais de engenharia aditiva de alta precisão.</p>
+          </div>
+          
+          <div class="projects-controls-minimal">
+            <button class="carousel-nav prev" id="prevProject" aria-label="Anterior">&lt;</button>
+            <button class="carousel-nav next" id="nextProject" aria-label="Próximo">&gt;</button>
+          </div>
+        </div>
+
+        <div class="projects-showcase-minimal scroll-reveal">
+          <div class="showcase-main-clean" id="projectDisplay">
+            <img src="assets/project_gears.jpg" alt="Engrenagens de Precisão VOXEL" class="showcase-img" id="projectImg">
+            <div class="showcase-overlay-clean">
+              <div class="showcase-info-clean">
+                <span class="showcase-category-clean" id="projectCat">ENGENHARIA MECÂNICA</span>
+                <h3 class="showcase-title-clean" id="projectTitle">Componentes de Engrenagens e Impulsor de Alta Tolerância</h3>
+                <p class="showcase-meta-clean" id="projectMeta">SLS Nylon PA12 | Tolerância ±0.05mm</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION: MINIMALIST CTA CARD -->
+    <section class="section cta-minimal-section" id="contato">
+      <div class="section-container">
+        <div class="cta-box-clean scroll-reveal">
+          <div class="cta-content-clean">
+            <h2 class="cta-title-clean">TEM UMA IDEIA?</h2>
+            <p class="cta-desc-clean">Transforme seu conceito digital em um objeto físico.</p>
+            <button class="btn btn-primary" data-modal="quoteModal">
+              SOLICITAR ORÇAMENTO
+            </button>
+          </div>
+          <div class="cta-visual-clean">
+            <img src="assets/cta_voxel_card.jpg" alt="VOXEL Card" class="cta-img-clean">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-top-clean">
+        <div class="footer-brand-clean">
+          <span class="logo-main">VOXEL</span>
+          <p class="footer-bio-clean">
+            Fabricação digital e impressão 3D de alta precisão.
+          </p>
+        </div>
+
+        <div class="footer-col-clean">
+          <h3 class="footer-heading-clean">NAVEGAÇÃO</h3>
+          <ul class="footer-links-clean">
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#materiais">Materiais</a></li>
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col-clean">
+          <h3 class="footer-heading-clean">CONTATO</h3>
+          <ul class="footer-links-clean">
+            <li><a href="tel:+5511999990000">+55 11 99999-0000</a></li>
+            <li><a href="mailto:contato@voxel3d.com.br">contato@voxel3d.com.br</a></li>
+            <li><a href="https://instagram.com" target="_blank">@voxel3d</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-clean">
+        <p>&copy; 2024 Voxel Digital Fabrication. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL DIALOG: ORÇAMENTO -->
+  <div class="modal-backdrop" id="quoteModal">
+    <div class="modal-container">
+      <button class="modal-close" id="closeModal">&times;</button>
+      
+      <div class="modal-header">
+        <h3 class="modal-title">SOLICITAR ORÇAMENTO</h3>
+        <p class="modal-desc">Envie os detalhes do seu projeto. Retornaremos em até 2 horas úteis.</p>
+      </div>
+
+      <form class="quote-form" id="quoteForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Nome completo *</label>
+            <input type="text" id="name" required placeholder="Seu nome ou empresa">
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail *</label>
+            <input type="email" id="email" required placeholder="seuemail@exemplo.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Telefone / WhatsApp *</label>
+            <input type="tel" id="phone" required placeholder="(11) 99999-9999">
+          </div>
+          <div class="form-group">
+            <label for="serviceType">Tipo de Serviço</label>
+            <select id="serviceType">
+              <option value="impressao-3d">Impressão 3D (FDM / SLA / SLS)</option>
+              <option value="prototipagem">Prototipagem Rápida</option>
+              <option value="pecas-tecnicas">Peças Técnicas de Precisão</option>
+              <option value="projetos-especiais">Projeto Especial</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Enviar Arquivo 3D (.STL, .OBJ, .STEP)</label>
+          <div class="file-dropzone" id="dropzone">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span class="dropzone-text">Arraste seu arquivo 3D aqui ou <strong>Clique para selecionar</strong></span>
+            <input type="file" id="fileInput" accept=".stl,.obj,.step,.stp,.zip" hidden>
+            <div class="file-selected" id="fileSelected"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Descrição do Projeto</label>
+          <textarea id="description" rows="3" placeholder="Quantidade, material ou observações..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-submit" style="width: 100%;">
+            ENVIAR PROJETO
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast">
+    <div class="toast-content">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <span id="toastMsg">Solicitação enviada com sucesso!</span>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
