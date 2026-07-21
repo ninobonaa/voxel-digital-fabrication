@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VOXEL DIGITAL FABRICATION - UNIFIED SCROLL-SCRUBBING ENGINE (DESKTOP & MOBILE)
+   VOXEL DIGITAL FABRICATION - UNIFIED SCROLL-SCRUBBING & OPTIMIZED PERFORMANCE ENGINE
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -196,8 +196,8 @@ function initAppleScrollObserver() {
   const elements = document.querySelectorAll('.scroll-reveal');
 
   const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -40px 0px'
+    threshold: 0.05,
+    rootMargin: '0px 0px -30px 0px'
   };
 
   const observer = new IntersectionObserver((entries) => {
@@ -214,12 +214,11 @@ function initAppleScrollObserver() {
   });
 }
 
-/* UNIFIED CANVAS SCROLL-SCRUBBING ENGINE FOR DESKTOP & MOBILE */
+/* UNIFIED HIGH-PERFORMANCE CANVAS SCROLL-SCRUBBING ENGINE */
 function initScrollScrubbedCanvas() {
   const canvas = document.getElementById('scrollCanvas');
   const canvasLoader = document.getElementById('canvasLoader');
   const track = document.getElementById('heroScrollTrack');
-  const wrapper = document.getElementById('canvasWrapper');
   const heroContent = document.getElementById('heroContent');
   const heroMetrics = document.getElementById('heroMetrics');
   const servicosSection = document.getElementById('servicos');
@@ -231,7 +230,8 @@ function initScrollScrubbedCanvas() {
 
   const ctx = canvas.getContext('2d');
   const FRAME_COUNT = 60;
-  const frames = [];
+  const rawFrames = new Array(FRAME_COUNT);
+  const bitmaps = new Array(FRAME_COUNT);
   let loadedCount = 0;
 
   if (canvasLoader) canvasLoader.classList.add('loading');
@@ -246,31 +246,48 @@ function initScrollScrubbedCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  // Use optimized lightweight mobile frames on mobile devices (~4.8KB per frame)
+  // Frame path selection: lightweight ~4.8KB frames on mobile, high-res on desktop
   const frameFolderPath = isMobile ? 'assets/frames_mobile' : 'assets/frames';
 
+  // High-performance pre-decoding via createImageBitmap
   for (let i = 1; i <= FRAME_COUNT; i++) {
     const img = new Image();
+    const index = i - 1;
     const frameNum = String(i).padStart(3, '0');
     img.src = `${frameFolderPath}/frame_${frameNum}.jpg`;
 
     img.onload = () => {
-      loadedCount++;
-      if (loadedCount === 1) {
-        drawFrame(0);
-      }
-      if (loadedCount >= 8 && canvasLoader) {
-        canvasLoader.classList.remove('loading');
+      rawFrames[index] = img;
+      if (window.createImageBitmap) {
+        createImageBitmap(img).then(bmp => {
+          bitmaps[index] = bmp;
+          onFrameReady();
+        }).catch(() => {
+          bitmaps[index] = img;
+          onFrameReady();
+        });
+      } else {
+        bitmaps[index] = img;
+        onFrameReady();
       }
     };
+  }
 
-    frames.push(img);
+  function onFrameReady() {
+    loadedCount++;
+    if (loadedCount === 1) {
+      drawFrame(0);
+      updateScrollFrame();
+    }
+    if (loadedCount >= 8 && canvasLoader) {
+      canvasLoader.classList.remove('loading');
+    }
   }
 
   function drawFrame(index) {
-    const img = frames[index];
-    if (img && img.complete) {
-      const imgRatio = img.width / img.height;
+    const source = bitmaps[index] || rawFrames[index];
+    if (source) {
+      const imgRatio = source.width / source.height;
       const canvasRatio = canvas.width / canvas.height;
 
       let renderWidth, renderHeight, offsetX, offsetY;
@@ -297,15 +314,16 @@ function initScrollScrubbedCanvas() {
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
+      ctx.drawImage(source, offsetX, offsetY, renderWidth, renderHeight);
     }
   }
 
   let currentFrameIndex = 0;
 
   if (isReducedMotion) {
-    // Accessible fallback: static frame 60
     drawFrame(59);
+    if (heroContent) { heroContent.style.opacity = '1'; heroContent.style.transform = 'none'; }
+    if (heroMetrics) { heroMetrics.style.opacity = '1'; heroMetrics.style.transform = 'none'; }
     return;
   }
 
@@ -318,43 +336,52 @@ function initScrollScrubbedCanvas() {
     let progress = -rect.top / maxScroll;
     progress = Math.max(0, Math.min(1, progress));
 
-    // A. Canvas Frame Scrubbing (Desktop & Mobile)
+    // A. Canvas Frame Scrubbing
     const targetIndex = Math.min(FRAME_COUNT - 1, Math.floor(progress * FRAME_COUNT));
 
     if (targetIndex !== currentFrameIndex) {
       currentFrameIndex = targetIndex;
-      requestAnimationFrame(() => drawFrame(currentFrameIndex));
+      drawFrame(currentFrameIndex);
     }
 
-    // B. Hero Text & Metrics (100% visible at scroll 0, fading out when transitioning to next section)
+    // B. Synchronized Text & Metrics Materialization (0% at scroll top -> 100% when piece is fully formed)
+    const textOpacityVal = Math.max(0, Math.min(1, progress));
+    const translateYVal = (1 - textOpacityVal) * 24;
+
     if (heroContent) {
-      let contentOpacity = 1;
-      if (progress > 0.6) {
-        contentOpacity = Math.max(0, 1 - (progress - 0.6) / 0.3);
-      }
-      heroContent.style.opacity = contentOpacity.toFixed(3);
+      heroContent.style.opacity = textOpacityVal.toFixed(3);
+      heroContent.style.transform = `translateY(${translateYVal.toFixed(1)}px)`;
     }
 
     if (heroMetrics) {
-      let metricsOpacity = 1;
-      if (progress > 0.6) {
-        metricsOpacity = Math.max(0, 1 - (progress - 0.6) / 0.3);
-      }
-      heroMetrics.style.opacity = metricsOpacity.toFixed(3);
+      heroMetrics.style.opacity = textOpacityVal.toFixed(3);
+      heroMetrics.style.transform = `translateY(${(translateYVal * 0.67).toFixed(1)}px)`;
     }
 
-    // C. Section Crossfade Zone (#servicos smoothly fading in at the end of hero pin track)
+    // C. Section Crossfade Zone (#servicos fading in smoothly near end of hero pin track)
     if (servicosSection) {
-      if (progress > 0.6) {
-        const crossfadeProgress = Math.min(1, (progress - 0.6) / 0.3);
+      if (progress > 0.75) {
+        const crossfadeProgress = Math.min(1, (progress - 0.75) / 0.25);
         servicosSection.style.opacity = crossfadeProgress.toFixed(3);
-      } else if (progress <= 0.6 && rect.top <= 0) {
+      } else if (progress <= 0.75 && rect.top <= 0) {
         servicosSection.style.opacity = '0';
       }
     }
   }
 
-  window.addEventListener('scroll', updateScrollFrame, { passive: true });
+  // Decoupled rAF Scroll Throttle (Zero stuttering per scroll event)
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateScrollFrame();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
   updateScrollFrame();
 }
 
