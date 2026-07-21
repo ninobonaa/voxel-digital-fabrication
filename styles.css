@@ -312,10 +312,10 @@ h1, h2, h3, h4, h5, h6 {
   position: sticky;
   top: 0;
   height: 100vh;
-  padding-top: calc(var(--nav-height) + 16px);
+  padding-top: var(--nav-height);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start; /* Start cleanly from top below header */
   overflow: hidden;
   background-color: #050505;
 }
@@ -380,13 +380,12 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
-/* Hero Container - Restored to start immediately below navbar (align-items: flex-start) */
+/* Hero Container - Placed cleanly at top below fixed header navigation */
 .hero-container {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  flex: 1;
-  padding-top: 16px;
+  padding-top: 32px;
   padding-bottom: 16px;
   width: 100%;
 }
@@ -415,7 +414,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.05em;
   color: var(--text-muted);
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .pulse-dot {
@@ -428,8 +427,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: 4.8rem;
-  line-height: 0.96;
+  font-size: clamp(3.2rem, 4.4vw, 4.4rem);
+  line-height: 1.02;
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
@@ -438,9 +437,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-description {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--text-primary);
-  max-width: 460px;
+  max-width: 440px;
   line-height: 1.55;
   margin-bottom: 28px;
   font-weight: 300;
@@ -485,9 +484,10 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(100%); }
 }
 
-/* MINIMALIST KEY METRICS STRIP */
+/* MINIMALIST KEY METRICS STRIP - Anchored cleanly at bottom of viewport */
 .hero-metrics-strip {
-  padding: 24px 0 44px 0;
+  margin-top: auto;
+  padding: 20px 0 40px 0;
   opacity: 1;
   transform: translateY(0);
   will-change: opacity, transform;
