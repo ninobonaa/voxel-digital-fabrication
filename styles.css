@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VOXEL DIGITAL FABRICATION - DESKTOP CANVAS & STATIC MOBILE HERO ENGINE
+   VOXEL DIGITAL FABRICATION - DESKTOP CANVAS ENGINE & STATIC MOBILE HERO ENGINE
    ========================================================================== */
 
 :root {
@@ -312,7 +312,7 @@ h1, h2, h3, h4, h5, h6 {
   position: sticky;
   top: 0;
   height: 100vh;
-  padding-top: calc(var(--nav-height) + 20px);
+  padding-top: calc(var(--nav-height) + 16px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -380,22 +380,24 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
-/* Hero Container strictly left-aligned */
+/* Hero Container - Restored to start immediately below navbar (align-items: flex-start) */
 .hero-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   flex: 1;
-  padding-bottom: 40px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   width: 100%;
 }
 
 /* Hero Content */
 .hero-content {
   width: 100%;
-  max-width: 520px;
+  max-width: 540px;
   margin-left: 0;
   margin-right: auto;
+  margin-top: 0;
   text-align: left;
   opacity: 1;
   transform: translateY(0);
@@ -413,7 +415,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.05em;
   color: var(--text-muted);
   text-transform: uppercase;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .pulse-dot {
@@ -426,21 +428,21 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: 5.2rem;
-  line-height: 0.95;
+  font-size: 4.8rem;
+  line-height: 0.96;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
   color: #ffffff;
   text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95);
 }
 
 .hero-description {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--text-primary);
   max-width: 460px;
-  line-height: 1.6;
-  margin-bottom: 44px;
+  line-height: 1.55;
+  margin-bottom: 28px;
   font-weight: 300;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
 }
@@ -485,7 +487,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* MINIMALIST KEY METRICS STRIP */
 .hero-metrics-strip {
-  padding: 40px 0 60px 0;
+  padding: 24px 0 44px 0;
   opacity: 1;
   transform: translateY(0);
   will-change: opacity, transform;
