@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VOXEL DIGITAL FABRICATION - UNIFIED SCROLL ENGINE & GPU PERFORMANCE
+   VOXEL DIGITAL FABRICATION - DESKTOP CANVAS & STATIC MOBILE HERO ENGINE
    ========================================================================== */
 
 :root {
@@ -301,11 +301,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   HERO SECTION - SCROLL-SCRUBBING CANVAS ENGINE
+   HERO SECTION - DESKTOP SCROLL-SCRUBBING & MOBILE STATIC HERO
    ========================================================================== */
 .hero-scroll-pin-track {
   position: relative;
-  height: 250vh; /* Dedicated scroll pinning distance */
+  height: 250vh; /* Dedicated scroll pinning distance for Desktop */
 }
 
 .hero-section.sticky-hero {
@@ -320,7 +320,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #050505;
 }
 
-/* Single Unified Canvas Wrapper with GPU Acceleration */
+/* Single Unified Canvas Wrapper (Desktop Only) */
 .hero-fullbleed-canvas-wrapper {
   position: absolute;
   top: 0;
@@ -343,6 +343,11 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   will-change: transform;
   transform: translateZ(0);
+}
+
+/* Static Backdrop Sculpture Element (Desktop: hidden) */
+.hero-mobile-bg-sculpture {
+  display: none !important;
 }
 
 /* Left Text Legibility Gradient Overlay */
@@ -385,16 +390,17 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-/* Hero Content - Initial State: 0% Opacity (Materializes from 0% at frame 0 to 100% at frame 60) */
+/* Hero Content */
 .hero-content {
   width: 100%;
   max-width: 520px;
   margin-left: 0;
   margin-right: auto;
   text-align: left;
-  opacity: 0;
-  transform: translateY(24px);
+  opacity: 1;
+  transform: translateY(0);
   will-change: opacity, transform;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .status-live-badge {
@@ -477,12 +483,13 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(100%); }
 }
 
-/* MINIMALIST KEY METRICS STRIP - Initial State: 0% Opacity */
+/* MINIMALIST KEY METRICS STRIP */
 .hero-metrics-strip {
   padding: 40px 0 60px 0;
-  opacity: 0;
-  transform: translateY(16px);
+  opacity: 1;
+  transform: translateY(0);
   will-change: opacity, transform;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .metrics-container {
@@ -516,7 +523,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   SECTIONS COMMON & SCROLL REVEAL TRANSITIONS (/impeccable animate)
+   SECTIONS COMMON & DESKTOP SCROLL REVEAL TRANSITIONS
    ========================================================================== */
 .section {
   padding: 140px 0;
@@ -525,18 +532,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .scroll-reveal {
-  opacity: 0 !important;
-  transform: translateY(24px) !important;
+  opacity: 0;
+  transform: translateY(24px);
   transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
 .scroll-reveal.revealed {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Stagger Delays for Smooth Section Entrance */
+/* Stagger Delays for Desktop */
 .stagger-1 { transition-delay: 0.08s; }
 .stagger-2 { transition-delay: 0.16s; }
 .stagger-3 { transition-delay: 0.24s; }
@@ -1116,7 +1123,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN & MOBILE OPTIMIZATIONS
+   EXCLUSIVE MOBILE STRATEGY OVERRIDES (@media max-width: 900px, hover: none)
    ========================================================================== */
 @media (max-width: 1200px) {
   .hero-title { font-size: 4rem; }
@@ -1125,29 +1132,77 @@ h1, h2, h3, h4, h5, h6 {
   .showcase-reverse .showcase-body { grid-column: 1; grid-row: auto; }
 }
 
-@media (max-width: 900px) {
-  /* Mobile Hero Pin Track Distance (Otimizado para scroll suave) */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  /* 1. Eliminate Section Pin Track & Scroll-Jack on Mobile */
   .hero-scroll-pin-track {
-    height: 180vh;
+    height: auto !important;
+    position: relative !important;
+  }
+
+  .hero-section.sticky-hero {
+    position: relative !important;
+    top: 0 !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    padding-top: calc(var(--nav-height) + 24px) !important;
+    padding-bottom: 40px !important;
+    justify-content: space-between;
+  }
+
+  /* Completely disable canvas & desktop overlays on mobile */
+  .hero-fullbleed-canvas-wrapper {
+    display: none !important;
   }
 
   .hero-text-legibility-overlay {
-    width: 100%;
-    background: linear-gradient(
-      to bottom,
-      rgba(5, 5, 5, 0.92) 0%,
-      rgba(5, 5, 5, 0.75) 50%,
-      rgba(5, 5, 5, 0.95) 100%
-    );
+    display: none !important;
   }
 
-  .section {
-    padding: 70px 0 !important;
+  /* 2. Static Mobile Backdrop Sculpture Image (Reduced Opacity Depth Backdrop) */
+  .hero-mobile-bg-sculpture {
+    display: block !important;
+    position: absolute;
+    top: 42%;
+    right: -10%;
+    width: 95%;
+    max-width: 420px;
+    transform: translateY(-50%);
+    opacity: 0.45;
+    pointer-events: none;
+    z-index: 0;
+    filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.95));
+  }
+
+  .mobile-bg-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  /* 3. Hero Text Block & Metrics: 100% Opacity Immediately on Load */
+  .hero-content,
+  .hero-metrics-strip {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* 4. Remove Section Scroll Reveal Animations on Mobile (Render 100% Visible Immediately) */
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 
   .services-minimal-section {
-    padding-top: 70px !important;
-    margin-top: -40px !important;
+    padding-top: 60px !important;
+    margin-top: 0 !important; /* Zero negative margins on mobile */
+    opacity: 1 !important;
+  }
+
+  .section {
+    padding: 60px 0 !important;
   }
 
   .nav-links, .nav-btn { display: none; }

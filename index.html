@@ -78,16 +78,21 @@
   </div>
 
   <main>
-    <!-- HERO SECTION WITH UNIFIED SCROLL-SCRUBBING CANVAS (DESKTOP & MOBILE) -->
+    <!-- HERO SECTION: SCROLL-SCRUBBING DESKTOP / STATIC HERO MOBILE -->
     <div class="hero-scroll-pin-track" id="heroScrollTrack">
       <section class="hero-section sticky-hero full-bleed-hero" id="hero">
 
-        <!-- Unified Full-Bleed Scroll Scrubbing Canvas Background -->
+        <!-- Full-Bleed Scroll Scrubbing Canvas Background (Desktop Only) -->
         <div class="hero-fullbleed-canvas-wrapper" id="canvasWrapper">
           <canvas id="scrollCanvas" class="scroll-canvas-fullbleed"></canvas>
           <div class="canvas-loader" id="canvasLoader">
             <div class="loader-bar"></div>
           </div>
+        </div>
+
+        <!-- Static Backdrop Sculpture Image (Mobile Only) -->
+        <div class="hero-mobile-bg-sculpture" id="mobileBgSculpture">
+          <img src="assets/hero_sculpture_v3.png" alt="VOXEL 3D Monogram" class="mobile-bg-img" loading="eager">
         </div>
 
         <!-- Legibility Text Gradient Overlay -->
@@ -140,7 +145,7 @@
       </section>
     </div>
 
-    <!-- SERVICES SECTION: SEQUENTIAL APPLE-STYLE SHOWCASES WITH STAGGERED REVEALS -->
+    <!-- SERVICES SECTION -->
     <section class="section services-minimal-section" id="servicos">
       <div class="section-container">
         
@@ -220,7 +225,7 @@
       </div>
     </section>
 
-    <!-- PROCESS SECTION: CONNECTED PROGRESS TRACK LINE -->
+    <!-- PROCESS SECTION -->
     <section class="section process-minimal-section" id="sobre">
       <div class="section-container">
         <div class="services-intro">
@@ -267,7 +272,7 @@
       </div>
     </section>
 
-    <!-- PROJECTS SECTION: UNCLUTTERED PRODUCT HERO SHOWCASE -->
+    <!-- PROJECTS SECTION -->
     <section class="section projects-minimal-section" id="projetos">
       <div class="section-container">
         <div class="projects-header-minimal">
@@ -297,7 +302,7 @@
       </div>
     </section>
 
-    <!-- CTA SECTION: MINIMALIST CTA CARD -->
+    <!-- CTA SECTION -->
     <section class="section cta-minimal-section" id="contato">
       <div class="section-container">
         <div class="cta-box-clean scroll-reveal">
