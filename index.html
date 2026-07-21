@@ -16,7 +16,7 @@
 </head>
 <body>
 
-  <!-- Continuous 60fps GPU Ambient Light Nebula Background (Delight) -->
+  <!-- Continuous 60fps GPU Ambient Light Nebula Background -->
   <div class="global-ambient-bg"></div>
 
   <!-- Background SVG Noise -->
@@ -38,9 +38,8 @@
 
       <nav class="nav-links">
         <a href="#servicos" class="nav-link">SERVIÇOS</a>
-        <a href="#materiais" class="nav-link">MATERIAIS</a>
+        <a href="#sobre" class="nav-link">METODOLOGIA</a>
         <a href="#projetos" class="nav-link">PROJETOS</a>
-        <a href="#sobre" class="nav-link">SOBRE</a>
         <a href="#contato" class="nav-link">CONTATO</a>
       </nav>
 
@@ -63,13 +62,12 @@
       <div class="logo-text">
         <span class="logo-main">VOXEL</span>
       </div>
-      <button class="close-drawer" id="closeDrawer">&times;</button>
+      <button class="close-drawer" id="closeDrawer" aria-label="Fechar menu">&times;</button>
     </div>
     <nav class="drawer-links">
       <a href="#servicos" class="drawer-link">SERVIÇOS</a>
-      <a href="#materiais" class="drawer-link">MATERIAIS</a>
+      <a href="#sobre" class="drawer-link">METODOLOGIA</a>
       <a href="#projetos" class="drawer-link">PROJETOS</a>
-      <a href="#sobre" class="drawer-link">SOBRE</a>
       <a href="#contato" class="drawer-link">CONTATO</a>
     </nav>
     <div class="drawer-cta">
@@ -84,17 +82,12 @@
     <div class="hero-scroll-pin-track" id="heroScrollTrack">
       <section class="hero-section sticky-hero full-bleed-hero" id="hero">
 
-        <!-- Full-Bleed Scroll Scrubbing Canvas Background with Bottom Mask -->
+        <!-- Full-Bleed Scroll Scrubbing Canvas Background with Bottom Mask (Desktop) -->
         <div class="hero-fullbleed-canvas-wrapper" id="canvasWrapper">
           <canvas id="scrollCanvas" class="scroll-canvas-fullbleed"></canvas>
           <div class="canvas-loader" id="canvasLoader">
             <div class="loader-bar"></div>
           </div>
-        </div>
-
-        <!-- Mobile Hero Background Sculpture Image -->
-        <div class="hero-mobile-bg">
-          <img src="assets/hero_sculpture_v3.png" alt="VOXEL Monograma 3D" class="hero-mobile-img">
         </div>
 
         <!-- Legibility Text Gradient Overlay (Left Side Contrast Protection) -->
@@ -128,6 +121,11 @@
               </a>
             </div>
           </div>
+
+          <!-- Mobile Hero Sculpture Element (IntersectionObserver animated, touch fallback) -->
+          <div class="hero-mobile-sculpture scroll-reveal">
+            <img src="assets/hero_sculpture_v3.png" alt="VOXEL Monograma 3D" class="mobile-sculpture-img" loading="eager">
+          </div>
         </div>
 
         <!-- MINIMALIST KEY METRICS STRIP -->
@@ -159,7 +157,7 @@
         <!-- Sequential Service Block 1: Impressão 3D -->
         <div class="service-showcase-block scroll-reveal">
           <div class="showcase-media">
-            <img src="assets/service_3d_printer.jpg" alt="Impressão 3D Industrial" class="showcase-img">
+            <img src="assets/service_3d_printer.jpg" alt="Impressão 3D Industrial" class="showcase-img" loading="lazy">
           </div>
           <div class="showcase-body">
             <span class="showcase-num">01</span>
@@ -176,7 +174,7 @@
         <!-- Sequential Service Block 2: Prototipagem -->
         <div class="service-showcase-block showcase-reverse scroll-reveal">
           <div class="showcase-media">
-            <img src="assets/service_prototyping.jpg" alt="Prototipagem Rápida" class="showcase-img">
+            <img src="assets/service_prototyping.jpg" alt="Prototipagem Rápida" class="showcase-img" loading="lazy">
           </div>
           <div class="showcase-body">
             <span class="showcase-num">02</span>
@@ -193,7 +191,7 @@
         <!-- Sequential Service Block 3: Peças Técnicas -->
         <div class="service-showcase-block scroll-reveal">
           <div class="showcase-media">
-            <img src="assets/service_technical_parts.jpg" alt="Peças Técnicas" class="showcase-img">
+            <img src="assets/service_technical_parts.jpg" alt="Peças Técnicas" class="showcase-img" loading="lazy">
           </div>
           <div class="showcase-body">
             <span class="showcase-num">03</span>
@@ -210,7 +208,7 @@
         <!-- Sequential Service Block 4: Projetos Especiais -->
         <div class="service-showcase-block showcase-reverse scroll-reveal">
           <div class="showcase-media">
-            <img src="assets/service_special_projects.jpg" alt="Projetos Especiais" class="showcase-img">
+            <img src="assets/service_special_projects.jpg" alt="Projetos Especiais" class="showcase-img" loading="lazy">
           </div>
           <div class="showcase-body">
             <span class="showcase-num">04</span>
@@ -291,7 +289,7 @@
 
         <div class="projects-showcase-minimal scroll-reveal">
           <div class="showcase-main-clean" id="projectDisplay">
-            <img src="assets/project_gears.jpg" alt="Engrenagens de Precisão VOXEL" class="showcase-img" id="projectImg">
+            <img src="assets/project_gears.jpg" alt="Engrenagens de Precisão VOXEL" class="showcase-img" id="projectImg" loading="lazy">
             <div class="showcase-overlay-clean">
               <div class="showcase-info-clean">
                 <span class="showcase-category-clean" id="projectCat">ENGENHARIA MECÂNICA</span>
@@ -316,7 +314,7 @@
             </button>
           </div>
           <div class="cta-visual-clean">
-            <img src="assets/cta_voxel_card.jpg" alt="VOXEL Card" class="cta-img-clean">
+            <img src="assets/cta_voxel_card.jpg" alt="VOXEL Card" class="cta-img-clean" loading="lazy">
           </div>
         </div>
       </div>
@@ -338,7 +336,7 @@
           <h3 class="footer-heading-clean">NAVEGAÇÃO</h3>
           <ul class="footer-links-clean">
             <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#materiais">Materiais</a></li>
+            <li><a href="#sobre">Metodologia</a></li>
             <li><a href="#projetos">Projetos</a></li>
             <li><a href="#contato">Contato</a></li>
           </ul>
@@ -363,7 +361,7 @@
   <!-- MODAL DIALOG: ORÇAMENTO -->
   <div class="modal-backdrop" id="quoteModal">
     <div class="modal-container">
-      <button class="modal-close" id="closeModal">&times;</button>
+      <button class="modal-close" id="closeModal" aria-label="Fechar modal">&times;</button>
       
       <div class="modal-header">
         <h3 class="modal-title">SOLICITAR ORÇAMENTO</h3>

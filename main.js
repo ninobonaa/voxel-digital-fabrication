@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VOXEL DIGITAL FABRICATION - APPLE SCROLL-SCRUBBING FULL-BLEED CANVAS
+   VOXEL DIGITAL FABRICATION - ROBUST MOBILE & DESKTOP INTERACTIVITY ENGINE
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -196,8 +196,8 @@ function initAppleScrollObserver() {
   const elements = document.querySelectorAll('.scroll-reveal');
 
   const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -60px 0px'
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
   };
 
   const observer = new IntersectionObserver((entries) => {
@@ -214,7 +214,7 @@ function initAppleScrollObserver() {
   });
 }
 
-/* 1. APPLE-STYLE FULL-BLEED SCROLL-SCRUBBED CANVAS ENGINE & SECTION CROSSFADE */
+/* ROBUST DESKTOP CANVAS SCUBBING & CLEAN MOBILE FALLBACK */
 function initScrollScrubbedCanvas() {
   const canvas = document.getElementById('scrollCanvas');
   const canvasLoader = document.getElementById('canvasLoader');
@@ -226,12 +226,26 @@ function initScrollScrubbedCanvas() {
 
   if (!canvas || !track) return;
 
-  // Responsive check
-  const isMobile = window.innerWidth <= 900;
+  // Robust Mobile & Touch Device Detection
+  const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  const isSmallScreen = window.innerWidth <= 900;
+  const isMobile = isTouchDevice || isSmallScreen;
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Clean Mobile / Touch Fallback: Disable Canvas & Pinning completely
   if (isMobile || isReducedMotion) {
     if (wrapper) wrapper.style.display = 'none';
+    if (heroContent) {
+      heroContent.style.opacity = '1';
+      heroContent.style.transform = 'none';
+    }
+    if (heroMetrics) {
+      heroMetrics.style.opacity = '1';
+      heroMetrics.style.transform = 'none';
+    }
+    if (servicosSection) {
+      servicosSection.style.opacity = '1';
+    }
     return;
   }
 
@@ -252,7 +266,7 @@ function initScrollScrubbedCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  // Preload frames asynchronously
+  // Preload frames asynchronously for Desktop
   for (let i = 1; i <= FRAME_COUNT; i++) {
     const img = new Image();
     const frameNum = String(i).padStart(3, '0');
@@ -282,13 +296,11 @@ function initScrollScrubbedCanvas() {
       if (canvasRatio > imgRatio) {
         renderWidth = canvas.width;
         renderHeight = canvas.width / imgRatio;
-        // Keep sculpture strictly on the right half
         offsetX = canvas.width * 0.18;
         offsetY = (canvas.height - renderHeight) / 2;
       } else {
         renderWidth = canvas.height * imgRatio;
         renderHeight = canvas.height;
-        // Align sculpture strictly on the right side
         offsetX = (canvas.width - renderWidth) * 0.95;
         offsetY = 0;
       }
@@ -317,29 +329,29 @@ function initScrollScrubbedCanvas() {
       requestAnimationFrame(() => drawFrame(currentFrameIndex));
     }
 
-    // B. Synchronized Text & Metrics Materialization (Strict 0% to 100% Opacity)
-    if (heroContent && !isMobile && !isReducedMotion) {
-      const opacityVal = Math.max(0, Math.min(1, progress));
-      const translateYVal = (1 - opacityVal) * 24;
-
-      heroContent.style.opacity = opacityVal.toFixed(3);
-      heroContent.style.transform = `translateY(${translateYVal.toFixed(1)}px)`;
+    // B. Desktop Text & Metrics (100% visible at scroll 0, fading out when transitioning to next section)
+    if (heroContent) {
+      let contentOpacity = 1;
+      if (progress > 0.6) {
+        contentOpacity = Math.max(0, 1 - (progress - 0.6) / 0.3);
+      }
+      heroContent.style.opacity = contentOpacity.toFixed(3);
     }
 
-    if (heroMetrics && !isMobile && !isReducedMotion) {
-      const opacityVal = Math.max(0, Math.min(1, progress));
-      const translateYVal = (1 - opacityVal) * 16;
-
-      heroMetrics.style.opacity = opacityVal.toFixed(3);
-      heroMetrics.style.transform = `translateY(${translateYVal.toFixed(1)}px)`;
+    if (heroMetrics) {
+      let metricsOpacity = 1;
+      if (progress > 0.6) {
+        metricsOpacity = Math.max(0, 1 - (progress - 0.6) / 0.3);
+      }
+      heroMetrics.style.opacity = metricsOpacity.toFixed(3);
     }
 
     // C. Section Crossfade Zone (#servicos smoothly fading in at the end of hero pin track)
-    if (servicosSection && !isMobile && !isReducedMotion) {
-      if (progress > 0.7) {
-        const crossfadeProgress = Math.min(1, (progress - 0.7) / 0.3);
+    if (servicosSection) {
+      if (progress > 0.6) {
+        const crossfadeProgress = Math.min(1, (progress - 0.6) / 0.3);
         servicosSection.style.opacity = crossfadeProgress.toFixed(3);
-      } else if (progress <= 0.7 && rect.top <= 0) {
+      } else if (progress <= 0.6 && rect.top <= 0) {
         servicosSection.style.opacity = '0';
       }
     }
@@ -349,7 +361,7 @@ function initScrollScrubbedCanvas() {
   updateScrollFrame();
 }
 
-/* METODOLOGIA SCROLL PROGRESS FILL LINE VIA GPU TRANSFORM */
+/* METODOLOGIA SCROLL PROGRESS FILL LINE */
 function initProcessProgressTrack() {
   const timelineSection = document.getElementById('processTimeline');
   const progressFill = document.getElementById('progressFill');
@@ -413,7 +425,7 @@ function initMinimalTelemetryCounters() {
 
   function animateCount(el, config) {
     let startTimestamp = null;
-    const duration = 2000;
+    const duration = 1800;
 
     function step(timestamp) {
       if (!startTimestamp) startTimestamp = timestamp;
