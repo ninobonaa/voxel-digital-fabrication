@@ -345,7 +345,7 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateZ(0);
 }
 
-/* Static Backdrop Sculpture Element (Desktop: hidden) */
+/* Static Backdrop Sculpture Element (Desktop: strictly hidden) */
 .hero-mobile-bg-sculpture {
   display: none !important;
 }
@@ -1158,19 +1158,19 @@ h1, h2, h3, h4, h5, h6 {
     display: none !important;
   }
 
-  /* 2. Static Mobile Backdrop Sculpture Image (Reduced Opacity Depth Backdrop) */
+  /* 2. Official Metallic V/X Monogram Static Backdrop Image (65% Opacity Depth Backdrop) */
   .hero-mobile-bg-sculpture {
     display: block !important;
     position: absolute;
-    top: 42%;
-    right: -10%;
-    width: 95%;
-    max-width: 420px;
+    top: 45%;
+    right: -8%;
+    width: 92%;
+    max-width: 440px;
     transform: translateY(-50%);
-    opacity: 0.45;
+    opacity: 0.65;
     pointer-events: none;
     z-index: 0;
-    filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.95));
+    filter: drop-shadow(0 25px 60px rgba(0, 0, 0, 0.98));
   }
 
   .mobile-bg-img {
